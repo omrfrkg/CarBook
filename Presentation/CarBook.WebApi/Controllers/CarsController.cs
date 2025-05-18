@@ -1,0 +1,71 @@
+﻿using CarBook.Application.Features.CQRS.Commands.CarCommands;
+using CarBook.Application.Features.CQRS.Handlers.CarHandlers;
+using CarBook.Application.Features.CQRS.Queries.CarQueries;
+using Microsoft.AspNetCore.Mvc;
+
+namespace CarBook.WebApi.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CarsController : ControllerBase
+    {
+        private readonly GetCarByIdQueryHandler _getCarByIdQueryHandler;
+        private readonly GetCarQueryHandler _getCarQueryHandler;
+        private readonly UpdateCarCommandHandler _updateCarCommandHandler;
+        private readonly DeleteCarCommandHandler _deleteCarCommandHandler;
+        private readonly CreateCarCommandHandler _createCarCommandHandler;
+        private readonly GetCarWithBrandQueryHandler _getCarWithBrandQueryHandler;
+
+        public CarsController(GetCarByIdQueryHandler getCarByIdQueryHandler, GetCarQueryHandler getCarQueryHandler, UpdateCarCommandHandler updateCarCommandHandler, DeleteCarCommandHandler deleteCarCommandHandler, CreateCarCommandHandler createCarCommandHandler, GetCarWithBrandQueryHandler getCarWithBrandQueryHandler)
+        {
+            _getCarByIdQueryHandler = getCarByIdQueryHandler;
+            _getCarQueryHandler = getCarQueryHandler;
+            _updateCarCommandHandler = updateCarCommandHandler;
+            _deleteCarCommandHandler = deleteCarCommandHandler;
+            _createCarCommandHandler = createCarCommandHandler;
+            _getCarWithBrandQueryHandler = getCarWithBrandQueryHandler;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _getCarQueryHandler.Handle();
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var result = await _getCarByIdQueryHandler.Handle(new GetCarByIdQuery(id));
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(CreateCarCommand command)
+        {
+            await _createCarCommandHandler.Handle(command);
+            return Ok("Araba Bilgisi Eklendi");
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _deleteCarCommandHandler.Handle(new DeleteCarCommand(id));
+            return Ok("Araba Bilgisi Silindi");
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateCarCommand command)
+        {
+            await _updateCarCommandHandler.Handle(command);
+            return Ok("Araba Bilgisi Güncellendi");
+        }
+
+        [HttpGet("GetCarWithBrand")]
+        public async Task<IActionResult> GetCarWithBrand()
+        {
+            var result = await _getCarWithBrandQueryHandler.Handle();
+            return Ok(result);
+        }
+    }
+}

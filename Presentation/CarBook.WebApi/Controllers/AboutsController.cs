@@ -9,19 +9,19 @@ namespace CarBook.WebApi.Controllers
     [ApiController]
     public class AboutsController : ControllerBase
     {
+        private readonly GetAboutQueryHandler _getAboutQueryHandler;
         private readonly CreateAboutCommandHandler _createAboutCommandHandler;
         private readonly GetAboutByIdQueryHandler _getAboutByIdQueryHandler;
-        private readonly GetAboutQueryHandler _getAboutQueryHandler;
-        private readonly UpdateAboutCommandHandler _updateAboutCommandHandler;
         private readonly DeleteAboutCommandHandler _deleteAboutCommandHandler;
+        private readonly UpdateAboutCommandHandler _updateAboutCommandHandler;
 
-        public AboutsController(CreateAboutCommandHandler createAboutCommandHandler, GetAboutByIdQueryHandler getAboutByIdQueryHandler, GetAboutQueryHandler getAboutQueryHandler, UpdateAboutCommandHandler updateAboutCommandHandler, DeleteAboutCommandHandler deleteAboutCommandHandler)
+        public AboutsController(GetAboutQueryHandler getAboutQueryHandler, CreateAboutCommandHandler createAboutCommandHandler, GetAboutByIdQueryHandler getAboutByIdQueryHandler, DeleteAboutCommandHandler deleteAboutCommandHandler, UpdateAboutCommandHandler updateAboutCommandHandler)
         {
+            _getAboutQueryHandler = getAboutQueryHandler;
             _createAboutCommandHandler = createAboutCommandHandler;
             _getAboutByIdQueryHandler = getAboutByIdQueryHandler;
-            _getAboutQueryHandler = getAboutQueryHandler;
-            _updateAboutCommandHandler = updateAboutCommandHandler;
             _deleteAboutCommandHandler = deleteAboutCommandHandler;
+            _updateAboutCommandHandler = updateAboutCommandHandler;
         }
 
         [HttpGet]
@@ -34,29 +34,29 @@ namespace CarBook.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAbout(int id)
         {
-            var values = await _getAboutByIdQueryHandler.Handle(new GetAboutByIdQuery(id));
-            return Ok(values);
+            var value = await _getAboutByIdQueryHandler.Handle(new GetAboutByIdQuery(id));
+            return Ok(value);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAbout(CreateAboutCommand command)
+        public async Task<IActionResult> CreateAbout(CreateAboutCommand createAboutCommand)
         {
-            await _createAboutCommandHandler.Handle(command);
-            return Ok("Hakkımda Bilgisi Eklendi");
+            await _createAboutCommandHandler.Handle(createAboutCommand);
+            return Ok("Hakkımızda bilgisi eklendi.");
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteAbout(int id)
         {
             await _deleteAboutCommandHandler.Handle(new DeleteAboutCommand(id));
-            return Ok("Hakkımda Bilgisi Silindi");
+            return Ok("Hakkımızda bilgisi silindi.");
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAbout(UpdateAboutCommand command)
+        public async Task<IActionResult> UpdateAbout(UpdateAboutCommand updateAboutCommand)
         {
-            await _updateAboutCommandHandler.Handle(command);
-            return Ok("Hakkımda Bilgisi Güncellendi");
+            await _updateAboutCommandHandler.Handle(updateAboutCommand);
+            return Ok("Hakkımızda bilgisi güncellendi.");
         }
     }
 }
