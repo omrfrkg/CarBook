@@ -15,8 +15,9 @@ namespace CarBook.WebApi.Controllers
         private readonly DeleteCarCommandHandler _deleteCarCommandHandler;
         private readonly CreateCarCommandHandler _createCarCommandHandler;
         private readonly GetCarWithBrandQueryHandler _getCarWithBrandQueryHandler;
+        private readonly GetLast5CarsWithBrandQueryHandler _getLast5CarsWithBrandQueryHandler;
 
-        public CarsController(GetCarByIdQueryHandler getCarByIdQueryHandler, GetCarQueryHandler getCarQueryHandler, UpdateCarCommandHandler updateCarCommandHandler, DeleteCarCommandHandler deleteCarCommandHandler, CreateCarCommandHandler createCarCommandHandler, GetCarWithBrandQueryHandler getCarWithBrandQueryHandler)
+        public CarsController(GetCarByIdQueryHandler getCarByIdQueryHandler, GetCarQueryHandler getCarQueryHandler, UpdateCarCommandHandler updateCarCommandHandler, DeleteCarCommandHandler deleteCarCommandHandler, CreateCarCommandHandler createCarCommandHandler, GetCarWithBrandQueryHandler getCarWithBrandQueryHandler, GetLast5CarsWithBrandQueryHandler getLast5CarsWithBrandQueryHandler)
         {
             _getCarByIdQueryHandler = getCarByIdQueryHandler;
             _getCarQueryHandler = getCarQueryHandler;
@@ -24,6 +25,7 @@ namespace CarBook.WebApi.Controllers
             _deleteCarCommandHandler = deleteCarCommandHandler;
             _createCarCommandHandler = createCarCommandHandler;
             _getCarWithBrandQueryHandler = getCarWithBrandQueryHandler;
+            _getLast5CarsWithBrandQueryHandler = getLast5CarsWithBrandQueryHandler;
         }
 
         [HttpGet]
@@ -65,6 +67,13 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetCarWithBrand()
         {
             var result = await _getCarWithBrandQueryHandler.Handle();
+            return Ok(result);
+        }
+
+        [HttpGet("GetLast5CarsWithBrand")]
+        public async Task<IActionResult> GetLast5CarsWithBrandQueryHandler()
+        {
+            var result = await _getLast5CarsWithBrandQueryHandler.Handle();
             return Ok(result);
         }
     }
