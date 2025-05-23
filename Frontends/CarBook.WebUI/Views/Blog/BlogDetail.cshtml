@@ -9,7 +9,7 @@
         <div class="row">
 
             <!--BlogDetailsMain Start-->
-            @await Component.InvokeAsync("_BlogDetailsMainComponentPartial")
+            @await Component.InvokeAsync("_BlogDetailsMainComponentPartial",new {id = ViewBag.blogId})
             <!--BlogDetailsMain End-->
 
             <div class="col-md-4 sidebar ftco-animate">
@@ -27,7 +27,7 @@
                 <!--BlogDetailRecentBlogs End-->
 
                 <!--BlogDetailsTagCloud Start-->
-                @await Component.InvokeAsync("_BlogDetailsTagCloudComponentPartial")
+                @await Component.InvokeAsync("_BlogDetailsTagCloudComponentPartial", new { id = ViewBag.blogId })
                 <!--BlogDetailsTagCloud End-->
 
                 <!--BlogDetailsParagraph Start-->

@@ -24,6 +24,7 @@ namespace CarBook.Application.Features.Mediator.Handlers.AuthorHandlers
                 AuthorName = x.AuthorName,
                 Description = x.Description,
                 ImageUrl = x.ImageUrl,
+                
             }).ToList();
         }
     }
