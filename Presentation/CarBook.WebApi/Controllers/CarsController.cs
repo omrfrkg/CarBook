@@ -29,35 +29,35 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> CarList()
         {
             var result = await _getCarQueryHandler.Handle();
             return Ok(result);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetCar(int id)
         {
             var result = await _getCarByIdQueryHandler.Handle(new GetCarByIdQuery(id));
             return Ok(result);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(CreateCarCommand command)
+        public async Task<IActionResult> CreateCar(CreateCarCommand command)
         {
             await _createCarCommandHandler.Handle(command);
             return Ok("Araba Bilgisi Eklendi");
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCar(int id)
         {
             await _deleteCarCommandHandler.Handle(new DeleteCarCommand(id));
             return Ok("Araba Bilgisi Silindi");
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateCarCommand command)
+        public async Task<IActionResult> UpdateCar(UpdateCarCommand command)
         {
             await _updateCarCommandHandler.Handle(command);
             return Ok("Araba Bilgisi Güncellendi");
