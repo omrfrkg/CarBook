@@ -15,7 +15,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-        [Route("Index")]
+        [Route("Index/{id}")]
         public async Task<IActionResult> Index(int id)
         {
             ViewBag.id = id;

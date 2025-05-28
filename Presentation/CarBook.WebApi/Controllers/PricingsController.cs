@@ -37,7 +37,7 @@ namespace CarBook.WebApi.Controllers
             return Ok("Ödeme Türü Başarıyla Eklendi.");
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePricing(int id)
         {
             await _mediator.Send(new DeletePricingCommand(id));
