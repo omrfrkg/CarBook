@@ -20,6 +20,7 @@ namespace CarBook.Application.Features.Mediator.Handlers.TestimonialHandlers
             var value = await _repository.GetByIdAsync(request.Id);
             return new GetTestimonialByIdQueryResult
             {
+                TestimonialId = value.TestimonialId,
                 Comment = value.Comment,
                 ImageUrl = value.ImageUrl,
                 Name = value.Name,

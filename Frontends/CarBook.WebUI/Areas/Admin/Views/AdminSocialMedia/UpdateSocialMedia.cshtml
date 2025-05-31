@@ -1,0 +1,107 @@
+﻿@model UpdateSocialMediaDto
+@{
+    ViewData["Title"] = "UpdateSocialMedia";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="page-content">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xl-12">
+				<div class="card">
+					<div class="card-body">
+
+						<h4 class="card-title">Sosyal Medya Sayfası Veri Düzenleme Alanı</h4>
+						<p class="card-subtitle mb-4">
+							Sosyal medya hesaplarına ait veri düzenlemelerini buradan yapabilirsiniz. Yeni bir sosyal medya ekleyebilirsiniz. İkonlarla ilgili listeye ikon listesi üzerinden ulaşabilirsiniz.
+						</p>
+
+						<form method="post">
+							<input type="hidden" asp-for="SocialMediaId"/>
+							<div class="form-group">
+								<label for="exampleInputLocationName">Sosyal Medya Başlığı</label>
+								<input type="text" class="form-control" id="exampleInputLocationName" placeholder="Sosyal Medya Başlığını Giriniz" asp-for="Name">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputLocationUrl">Url</label>
+								<input type="text" class="form-control" id="exampleInputLocationUrl" placeholder="Sosyal Medya Hesabınızın Url Linkini Giriniz" asp-for="Url">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputLocationIcon">Sosyal Medya Ikon</label>
+								<input type="text" class="form-control" id="exampleInputLocationIcon" placeholder="Sosyal Medya Ikon Bilgisini Giriniz" asp-for="Icon">
+							</div>
+							<button type="submit" class="btn btn-primary waves-effect waves-light">Sosyal Medya Bilgisini Kaydet</button>
+						</form>
+					</div>
+				</div>
+				<div class="contaier">
+					<h2 style="display: flex; flex-direction: column; align-items: center; text-align: center;">Sosyal Medya Icon Listesi</h2>
+					<hr />
+					<div class="row mt-4">
+						<div class="col">
+							<div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+								<span class="icon icon-twitter" style="font-size: 50px;"></span>
+								<h2>icon-twitter</h2>
+							</div>
+						</div>
+						<div class="col">
+							<div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+								<span class="icon icon-facebook" style="font-size: 50px;"></span>
+								<h2>icon-facebook</h2>
+							</div>
+						</div>
+						<div class="col">
+							<div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+								<span class="icon icon-instagram" style="font-size: 50px;"></span>
+								<h2>icon-instagram</h2>
+							</div>
+						</div>
+					</div>
+					<div class="row mt-3">
+						<div class="col">
+							<div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+								<span class="icon icon-telegram" style="font-size: 50px;"></span>
+								<h2>icon-instagram</h2>
+							</div>
+						</div>
+						<div class="col">
+							<div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+								<span class="icon icon-youtube" style="font-size: 50px;"></span>
+								<h2>icon-youtube</h2>
+							</div>
+						</div>
+						<div class="col">
+							<div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+								<span class="icon icon-linkedin" style="font-size: 50px;"></span>
+								<h2>icon-linkedin</h2>
+							</div>
+						</div>
+
+					</div>
+					<div class="row mt-3">
+						<div class="col">
+							<div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+								<span class="icon icon-pinterest" style="font-size: 50px;"></span>
+								<h2>icon-pinterest</h2>
+							</div>
+						</div>
+						<div class="col">
+							<div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+								<span class="icon icon-snapchat" style="font-size: 50px;"></span>
+								<h2>icon-snapchat</h2>
+							</div>
+						</div>
+						<div class="col">
+							<div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+								<span class="icon icon-whatsapp" style="font-size: 50px;"></span>
+								<h2>icon-whatsapp</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
