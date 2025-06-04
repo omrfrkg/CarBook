@@ -1,6 +1,5 @@
 ﻿using CarBook.Application.Interfaces.StatisticsInterfaces;
 using CarBook.Persistance.Context;
-using Microsoft.EntityFrameworkCore;
 
 namespace CarBook.Persistance.Repositories.StatisticsRepositories
 {
@@ -15,7 +14,13 @@ namespace CarBook.Persistance.Repositories.StatisticsRepositories
 
         public string GetBlogTitleByMaxBlogComment()
         {
-            throw new NotImplementedException();
+            var values = _context.Comments.GroupBy(x => x.BlogId).Select(y => new
+                        {
+                            BlogId = y.Key,
+                            CommentCount = y.Count()
+                        }).OrderByDescending(z => z.CommentCount).Take(1).FirstOrDefault();
+            string blogName = _context.Blogs.Where(x => x.BlogId == values.BlogId).Select(x => x.Title).FirstOrDefault();
+            return blogName;
         }
 
         public int GetAuthorCount()
@@ -59,17 +64,84 @@ namespace CarBook.Persistance.Repositories.StatisticsRepositories
 
         public string GetBrandNameByMaxCar()
         {
-            throw new NotImplementedException();
+            var value = (from c in _context.Cars
+                          join b in _context.Brands
+                          on c.BrandId equals b.BrandId
+                          group c by b.Name into g
+                          select new
+                          {
+                              Name = g.Key,
+                              AracSayisi = g.Count()
+                          })
+             .OrderByDescending(g => g.AracSayisi)
+             .Take(1)
+             .FirstOrDefault();
+            return value.Name;
         }
 
         public string GetCarBrandAndModelByRentPriceDailyMax()
         {
-            throw new NotImplementedException();
+            var value = _context.CarPricings
+                        .Join(_context.Cars,
+                              cp => cp.CarId,
+                              c => c.CarId,
+                              (cp, c) => new { CarPricing = cp, Car = c })
+                        .Join(_context.Brands,
+                              x => x.Car.BrandId,
+                              b => b.BrandId,
+                              (x, b) => new { x.CarPricing, x.Car, Brand = b })
+                        .Where(x => x.CarPricing.Amount == _context.CarPricings
+                            .Join(_context.Pricings,
+                                  cp2 => cp2.PricingId,
+                                  p => p.PricingId,
+                                  (cp2, p) => new { CarPricing = cp2, Pricing = p })
+                            .Where(y => y.Pricing.Name == "Günlük")
+                            .Select(y => y.CarPricing.Amount)
+                            .Max())
+                        .Select(x => new
+                        {
+                            ModelAdi = x.Brand.Name + " " + x.Car.Model
+                        }).FirstOrDefault();
+            return value.ModelAdi;
+
+            /*
+             * Select (Brands.Name + ' ' + Cars.Model) AS ModelAdi
+                From CarPricings 
+                Inner Join Cars on Cars.CarId = CarPricings.CarId 
+                Inner Join Brands on Brands.BrandId = Cars.BrandId 
+                Where Amount=(
+                                Select Max(Amount) 
+                                From CarPricings 
+                                Inner Join Pricings on Pricings.PricingId = CarPricings.PricingId 
+                                Where Pricings.Name = 'Günlük')
+             */
         }
 
         public string GetCarBrandAndModelByRentPriceDailyMin()
         {
-            throw new NotImplementedException();
+            var value = _context.CarPricings
+                        .Join(_context.Cars,
+                              cp => cp.CarId,
+                              c => c.CarId,
+                              (cp, c) => new { CarPricing = cp, Car = c })
+                        .Join(_context.Brands,
+                              x => x.Car.BrandId,
+                              b => b.BrandId,
+                              (x, b) => new { x.CarPricing, x.Car, Brand = b })
+                        .Where(x => x.CarPricing.Amount == _context.CarPricings
+                            .Join(_context.Pricings,
+                                  cp2 => cp2.PricingId,
+                                  p => p.PricingId,
+                                  (cp2, p) => new { CarPricing = cp2, Pricing = p })
+                            .Where(y => y.Pricing.Name == "Günlük")
+                            .Select(y => y.CarPricing.Amount)
+                            .Min())
+                        .Select(x => new
+                        {
+                            ModelAdi = x.Brand.Name + " " + x.Car.Model
+                        }).FirstOrDefault();
+            return value.ModelAdi;
+
         }
 
         public int GetCarCount()
@@ -92,12 +164,12 @@ namespace CarBook.Persistance.Repositories.StatisticsRepositories
 
         public int GetCarCountByKmSmallerThen1000()
         {
-            var value = _context.Cars.Where(x => x.Km < 1000).Count();
+            var value = _context.Cars.Where(x => x.Km < 10000).Count();
             return value;
         }
 
         public int GetCarCountByTransmissionIsAuto()
-        { 
+        {
             var value = _context.Cars.Where(x => x.Transmission == "Otomatik").Count();
             return value;
         }
