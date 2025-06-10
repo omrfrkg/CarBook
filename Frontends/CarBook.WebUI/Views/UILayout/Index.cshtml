@@ -25,6 +25,10 @@
 
 	<!--Script Start-->
 	@await Component.InvokeAsync("_ScriptUILayoutComponentPartial")
+
+	<!-- Scripts section'ı render et -->
+	@RenderSection("Scripts", required: false)
+
 	<!--Script  End-->
 
 </body>
