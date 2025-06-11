@@ -8,6 +8,8 @@
         void Update(T entity);
         T GetById(int id);
         List<T> GetCommentsByBlogId(int id);
+        int GetCountCommentByBlogId(int id);
+
     }
 
 }
