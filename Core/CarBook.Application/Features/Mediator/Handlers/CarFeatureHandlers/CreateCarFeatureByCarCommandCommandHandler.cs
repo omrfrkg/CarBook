@@ -15,9 +15,9 @@ namespace CarBook.Application.Features.Mediator.Handlers.CarFeatureHandlers
 
         public async Task Handle(CreateCarFeatureByCarCommand request, CancellationToken cancellationToken)
         {
-            _repository.CreateCarFeatureByCar(new CarFeature
+            await _repository.CreateCarFeatureByCar(new CarFeature
             {
-                Available = false,
+                Available = true,
                 CarId = request.CarId,
                 FeatureID = request.FeatureID
             });

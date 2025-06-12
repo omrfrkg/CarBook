@@ -28,10 +28,15 @@ namespace CarBook.Persistance.Repositories.CarFeatureRepositories
             _context.SaveChanges();
         }
 
-        public void CreateCarFeatureByCar(CarFeature carFeature)
+        public async Task CreateCarFeatureByCar (CarFeature carFeature)
         {
-            _context.CarFeatures.Add(carFeature);
-            _context.SaveChanges();
+            var value = await _context.CarFeatures.Where(x => x.CarId == carFeature.CarId && x.FeatureID == carFeature.FeatureID).FirstOrDefaultAsync();
+            
+            if(value is null)
+            {
+                await _context.CarFeatures.AddRangeAsync(carFeature);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public List<CarFeature> GetCarFeaturesByCarId(int carId)

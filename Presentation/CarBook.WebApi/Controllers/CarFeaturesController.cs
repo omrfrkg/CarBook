@@ -40,8 +40,8 @@ namespace CarBook.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCarFeatureByCar(CreateCarFeatureByCarCommand command)
         {
-            _mediator.Send(command);
-            return Ok("Güncelleme Yapıldı");
+            await _mediator.Send(command);
+            return Ok("Ekleme Yapıldı");
         }
     }
 }
