@@ -70,6 +70,7 @@ builder.Services.AddScoped<UpdateCarCommandHandler>();
 builder.Services.AddScoped<DeleteCarCommandHandler>();
 builder.Services.AddScoped<GetCarWithBrandQueryHandler>();
 builder.Services.AddScoped<GetLast5CarsWithBrandQueryHandler>();
+builder.Services.AddScoped<GetCarWithBrandByIdQueryHandler>();
 
 //Category
 builder.Services.AddScoped<GetCategoryQueryHandler>();

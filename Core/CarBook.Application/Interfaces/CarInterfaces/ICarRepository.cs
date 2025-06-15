@@ -6,6 +6,7 @@ namespace CarBook.Application.Interfaces.CarInterfaces
     {
         Task<List<Car>> GetCarsListWithBrands();
         Task<List<Car>> GetLast5CarsWithBrands();
+        Task<Car> GetCarWithBrandById(int id);
         
     }
 }
