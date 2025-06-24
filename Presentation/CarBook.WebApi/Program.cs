@@ -1,3 +1,4 @@
+using System.Reflection;
 using CarBook.Application.Features.CQRS.Handlers.AboutHandlers;
 using CarBook.Application.Features.CQRS.Handlers.BannerHandlers;
 using CarBook.Application.Features.CQRS.Handlers.BrandHandlers;
@@ -28,6 +29,7 @@ using CarBook.Persistance.Repositories.RentACarRepositories;
 using CarBook.Persistance.Repositories.ReviewRepositories;
 using CarBook.Persistance.Repositories.StatisticsRepositories;
 using CarBook.Persistance.Repositories.TagCloudRepositories;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -94,6 +96,12 @@ builder.Services.AddScoped<UpdateContactCommandHandler>();
 
 //MediatR Services
 builder.Services.AddApplicationService(builder.Configuration);
+
+//Fluent Validation
+builder.Services.AddControllers().AddFluentValidation(x =>
+{
+    x.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
