@@ -1,0 +1,24 @@
+{
+  "version": "3.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "signalr.js@2.4.3",
+      "destination": "wwwroot/lib/signalr.js/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "@10pearls/signalr-no-jquery@0.3.6",
+      "destination": "wwwroot/lib/10pearls/signalr-no-jquery/",
+      "files": [
+        "src/signalR.js",
+        "src/signalR.min.js"
+      ]
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "@microsoft/signalr@6.0.6",
+      "destination": "wwwroot/lib/microsoft/signalr/"
+    }
+  ]
+}

@@ -33,11 +33,29 @@ using CarBook.Persistance.Repositories.RentACarRepositories;
 using CarBook.Persistance.Repositories.ReviewRepositories;
 using CarBook.Persistance.Repositories.StatisticsRepositories;
 using CarBook.Persistance.Repositories.TagCloudRepositories;
+using CarBook.WebApi.Hubs;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//SignalR
+builder.Services.AddHttpClient();
+
+//SignalR
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("CorsPolicy", builder =>
+    {
+        builder.AllowAnyHeader()
+               .AllowAnyMethod()
+               .SetIsOriginAllowed((host) => true)
+               .AllowCredentials();
+    });
+});
+
+builder.Services.AddSignalR();
 
 // Add services to the container.
 
@@ -139,6 +157,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//SignalR
+app.UseCors("CorsPolicy");
+
 app.UseHttpsRedirection();
 
 //JWT
@@ -147,5 +168,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//SignalR
+app.MapHub<CarHub>("/carhub");
 
 app.Run();

@@ -1,9 +1,11 @@
 ﻿using CarBook.Dto.StatisticsDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace CarBook.WebUI.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("Admin/AdminStatistics")]
     public class AdminStatisticsController : Controller
